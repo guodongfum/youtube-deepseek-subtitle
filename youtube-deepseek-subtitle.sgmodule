@@ -1,0 +1,16 @@
+#!name=YouTube 字幕翻译 (DeepSeek)
+#!desc=拦截 YouTube App 字幕(timedtext),使用 DeepSeek 翻译为中文,支持双语/仅译文
+#!category=YouTube
+#!arguments=DEEPSEEK_API_KEY:,MODEL:deepseek-chat,TARGET_LANG:简体中文,MODE:bilingual,API_BASE:https://api.deepseek.com,TIME_BUDGET:5
+#!arguments-desc=DEEPSEEK_API_KEY: DeepSeek API Key(必填,形如 sk-xxxx)\nMODEL: 模型名,默认 deepseek-chat\nTARGET_LANG: 目标语言,默认 简体中文\nMODE: bilingual=双语(原文+译文) / only=仅译文\nAPI_BASE: 接口地址,默认官方,可填中转地址\nTIME_BUDGET: 单次请求内最多翻译多少秒(默认5,Shadowrocket 约7秒会强杀脚本,不建议超过6)
+
+[Rule]
+# 禁用 QUIC,强制走 TCP,确保 MITM 能解密 YouTube 请求
+AND,((DOMAIN-SUFFIX,youtube.com),(PROTOCOL,UDP)),REJECT-NO-DROP
+
+[Script]
+# 请把 script-path 换成你自己托管脚本的直链(GitHub raw / Gist / 自建服务器)
+YouTube字幕翻译 = type=http-response,pattern=^https:\/\/www\.youtube\.com\/api\/timedtext\?,requires-body=1,max-size=0,binary-body-mode=0,timeout=60,script-path=https://raw.githubusercontent.com/guodongfum/youtube-translate/refs/heads/master/youtube-deepseek-subtitle.js,argument=DEEPSEEK_API_KEY={{{DEEPSEEK_API_KEY}}}&MODEL={{{MODEL}}}&TARGET_LANG={{{TARGET_LANG}}}&MODE={{{MODE}}}&API_BASE={{{API_BASE}}}&TIME_BUDGET={{{TIME_BUDGET}}}
+
+[MITM]
+hostname = %APPEND% www.youtube.com
