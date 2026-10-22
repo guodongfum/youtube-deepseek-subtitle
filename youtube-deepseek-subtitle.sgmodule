@@ -10,7 +10,7 @@ AND,((DOMAIN-SUFFIX,youtube.com),(PROTOCOL,UDP)),REJECT-NO-DROP
 
 [Script]
 # 请把 script-path 换成你自己托管脚本的直链(GitHub raw / Gist / 自建服务器)
-YouTube字幕翻译 = type=http-response,pattern=^https:\/\/www\.youtube\.com\/api\/timedtext\?,requires-body=1,max-size=0,binary-body-mode=0,timeout=60,script-path=https://raw.githubusercontent.com/guodongfum/youtube-translate/refs/heads/master/youtube-deepseek-subtitle.js,argument=DEEPSEEK_API_KEY={{{DEEPSEEK_API_KEY}}}&MODEL={{{MODEL}}}&TARGET_LANG={{{TARGET_LANG}}}&MODE={{{MODE}}}&API_BASE={{{API_BASE}}}&TIME_BUDGET={{{TIME_BUDGET}}}
+YouTube字幕翻译 = type=http-response,pattern=^https:\/\/www\.youtube\.com\/api\/timedtext\?,requires-body=1,max-size=0,binary-body-mode=0,timeout=60,script-path=https://raw.githubusercontent.com/guodongfum/youtube-deepseek-subtitle/refs/heads/main/youtube-deepseek-subtitle.js,argument=DEEPSEEK_API_KEY={{{DEEPSEEK_API_KEY}}}&MODEL={{{MODEL}}}&TARGET_LANG={{{TARGET_LANG}}}&MODE={{{MODE}}}&API_BASE={{{API_BASE}}}&TIME_BUDGET={{{TIME_BUDGET}}}
 
 [MITM]
 hostname = %APPEND% www.youtube.com
